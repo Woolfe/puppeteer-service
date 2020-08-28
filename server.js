@@ -2,9 +2,14 @@
 
 const puppeteer = require("puppeteer");
 const app = require("express")();
+const cors = require("cors");
+app.use(cors());
 
 let page;
-const init = async () => (page = await (await puppeteer.launch()).newPage());
+const init = async () =>
+  (page = await (await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox"]
+  })).newPage());
 
 // Init the page
 init();
