@@ -5,11 +5,16 @@ const app = require("express")();
 const cors = require("cors");
 app.use(cors());
 let page;
-const init = async () =>
-  (page = await (await puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"]
-  })).newPage());
-
+const init = async () => {
+  page = await (await puppeteer.launch({
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"'
+    ],
+    ignoreHTTPSErrors: true
+  })).newPage();
+};
 // Init the page
 init();
 app.use(function(req, res, next) {
